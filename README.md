@@ -1,8 +1,6 @@
-# StudentCup2026 H214
+# StudentCup2026
 
 企業データから、各企業が**従業員向けDX教育商材を購入するか（購入=1 / 非購入=0）**を予測する二値分類モデルです。
-
-本READMEは `StudentCup2026_Colab_Drive.ipynb` の現在の実装を基準にしています。
 
 ---
 
@@ -15,8 +13,6 @@ StudentCup2026では、企業の基本情報・財務情報・アンケート・
 - 評価指標: **F1 Score**
 - train: 742社
 - test: 800社
-
-数値・カテゴリ・自然言語が混在するデータのため、それぞれに適した前処理を行い、複数のモデルを組み合わせています。
 
 ---
 
@@ -248,14 +244,11 @@ main()
 submission_H214_current_best_noheader.csv
 ```
 
-提出形式は**ヘッダーなし2列**です。
+提出形式
 
 ```text
 企業ID, 予測値
 ```
-
-予測確率や実行情報などは `artifacts` フォルダにも保存されます。
-
 ---
 
 ## 10. Dependencies
@@ -269,25 +262,9 @@ scipy
 scikit-learn
 joblib
 ```
-
-Google Colabでは基本的に標準環境で実行できます。
-
 ---
 
 ## 11. 注意点
-
-### Seed設定
-
-Notebook内には「60-seed」という表記がありますが、現在のコードでは、
-
-```python
-SEEDS = [42]
-```
-
-となっています。
-
-そのため、**現在の実装は実質1 seedです**。  
-60-seed版を再現するには、使用していたseed一覧の復元が必要です。
 
 ### Public Best Override
 
@@ -301,34 +278,3 @@ APPLY_PUBLIC_BEST_OVERRIDE = True
 純粋なモデル性能を確認する場合は `False` に設定してください。
 
 ---
-
-## 12. Pipeline Summary
-
-```text
-train / test
-   │
-   ├─ 自然言語
-   │    └─ char n-gram → TF-IDF → LinearSVC
-   │
-   └─ 構造化データ
-        └─ Feature Engineering
-           → Imputation
-           → Scaling / One-Hot
-           → Logistic Regression
-
-        ↓
-
-自然言語 + 構造化予測を統合
-
-        ↓
-
-H214 branch blend
-
-        ↓
-
-threshold = 0.28
-
-        ↓
-
-submission
-```
